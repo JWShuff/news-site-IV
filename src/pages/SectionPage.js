@@ -5,42 +5,43 @@ import ArticleList from '../components/ArticleList/ArticleList.js';
 class SectionPage extends Component {
   state = {
     articles: [],
-    section: "",
   };
 
-  // Life cycles:
-  async componentDidMount() {
+  // Helper Methods
+
+  async updateSectionArticles() {
     try {
       const sectionID = this.props.match.params.sectionID
-      this.setState({ section: sectionID})
       const sectionArticles = await ArticlesAPI.fetchArticlesBySection(sectionID);
-      this.setState({ articles: sectionArticles });
+      this.setState({
+        articles: sectionArticles
+      });
     } catch (e) {
       console.error('error fetching section articles: ', e);
     }
   }
 
-  async componentDidUpdate(prevState) {
-    if(prevState.articles !== this.state.articles) {
-      try {
-        const articlesJson = await ArticlesAPI.fetchArticlesBySection(this.props.match.params.sectionID);
-        this.setState({ articles: articlesJson});
-      } catch (e) {
-        console.error('something has gone very wrong: ', e)
-      }
+  // Life cycles:
+  componentDidMount() {
+    this.updateSectionArticles();
+  }
+
+  componentDidUpdate(prevProps) {
+    if(prevProps.match.params.sectionID !== this.props.match.params.sectionID) {
+      this.updateSectionArticles();
     }
   }
   
   render() {
     return (
       <div>
-        <h2>
-          {this.state.section ?
-          `${this.state.section} page`
-          : 'NO SECTION.'
+        <h3>
+          {
+            this.props.match.params.sectionID ?
+          `${this.props.match.params.sectionID} page`
+          : 'NO SUCH SECTION.'
         }
-        </h2>
-        <hr />
+        </h3>
         {this.state.articles ? <ArticleList articles={ this.state.articles }/> :
           <span>404: Article Not Found</span>
         }

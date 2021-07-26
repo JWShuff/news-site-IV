@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Link } from 'react-router-dom';
-import { Navbar } from 'reactstrap';
+import {Button, Input, InputGroup, InputGroupAddon, Navbar, NavItem } from 'reactstrap';
 import navItems from '../../config/Sections.json';
 
 class AppNav extends Component {
@@ -14,6 +14,13 @@ class AppNav extends Component {
                 | { navItem.label } |
               </Link>
           )}
+          <NavItem>
+            {/* To do:  */}
+            {/* <InputGroup>
+              <InputGroupAddon addonType='prepend'><Button>Search</Button></InputGroupAddon>
+              <Input onChange={(e) => this.handleSearch(e)} type="text" placeholder="Filter Articles" />
+            </InputGroup> */}
+          </NavItem>
       </Navbar>
     )
   }
