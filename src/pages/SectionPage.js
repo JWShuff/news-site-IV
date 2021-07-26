@@ -1,53 +1,41 @@
-import React, { Component } from 'react';
+import React, { Component, useEffect, useState } from 'react';
 import ArticlesAPI from '../api/ArticlesAPI';
 import ArticleList from '../components/ArticleList/ArticleList.js';
 
-class SectionPage extends Component {
-  state = {
-    articles: [],
-  };
+const SectionPage = (props) => {
+  const [articles, setArticles] = useState([])
+
 
   // Helper Methods
-
-  async updateSectionArticles() {
+  const updateSectionArticles = async () => {
     try {
-      const sectionID = this.props.match.params.sectionID
+      const sectionID = props.match.params.sectionID
       const sectionArticles = await ArticlesAPI.fetchArticlesBySection(sectionID);
-      this.setState({
-        articles: sectionArticles
-      });
+      setArticles(sectionArticles);
     } catch (e) {
       console.error('error fetching section articles: ', e);
     }
   }
 
   // Life cycles:
-  componentDidMount() {
-    this.updateSectionArticles();
-  }
+  useEffect(() => {
+    updateSectionArticles();
+  }, [articles])
 
-  componentDidUpdate(prevProps) {
-    if(prevProps.match.params.sectionID !== this.props.match.params.sectionID) {
-      this.updateSectionArticles();
-    }
-  }
-  
-  render() {
-    return (
-      <div>
-        <h3>
-          {
-            this.props.match.params.sectionID ?
-          `${this.props.match.params.sectionID} page`
-          : 'NO SUCH SECTION.'
-        }
-        </h3>
-        {this.state.articles ? <ArticleList articles={ this.state.articles }/> :
-          <span>404: Article Not Found</span>
-        }
-      </div>
-    );
-  }
+  return (
+    <div>
+      <h3>
+        {
+          props.match.params.sectionID ?
+        `${props.match.params.sectionID} page`
+        : 'NO SUCH SECTION.'
+      }
+      </h3>
+      {articles ? <ArticleList articles={ articles }/> :
+        <span>404: Articles Not Found</span>
+      }
+    </div>
+  );
 }
 
 export default SectionPage;

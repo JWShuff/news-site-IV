@@ -9,7 +9,7 @@ const ArticleList = (props) => {
     <ListGroup>
       { articles.map((article, index) => (
         <ListGroupItem key={index}>
-          <ArticleTeaser { ...article } id={ index + 1 } />
+          <ArticleTeaser { ...article } id={ article.id } />
         </ListGroupItem>
       ))}
     </ListGroup>
