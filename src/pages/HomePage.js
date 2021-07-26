@@ -1,51 +1,57 @@
-import React, { Component } from 'react';
+import { useEffect, useState } from 'react';
 import ArticleList from '../components/ArticleList/ArticleList.js'
 import ArticlesAPI from '../api/ArticlesAPI';
-import { Input, InputGroup } from 'reactstrap';
+import { Button, Input, InputGroup, InputGroupAddon } from 'reactstrap';
 
-class HomePage extends Component {
-  state = {
-    articles: [],
-  };
+const HomePage = () => {
+  
+  const [articles, setArticles] = useState([]);
+  const [searchText, setSearchText] = useState('');
+  // used to track the input field and when search button is clicked, update searchtext:
+  const [inputText, setInputText] = useState('');
 
-  async updateArticles() {
+  async function updateArticles() {
     try {
-      const articlesJson = await ArticlesAPI.fetchArticles();
-      this.setState({
-        articles: articlesJson
-      });
-    } catch (e) {
-      console.error('error fetching articles: ', e);
+      console.log('loading articles')
+      const json = await ArticlesAPI.fetchArticles(searchText);
+      setArticles(json)
+    } catch (error) {
+      console.error('error found fetching articles: ', error);
     }
-  }
+  };
+  
+  // updates based on search text
+  useEffect(() => {
+    updateArticles();
+  }, [searchText]);
 
-  componentDidMount() {
-    this.updateArticles();
-  }
-
-  handleSearch = async (e) => {
-    let inputValue = e.target.value
-    // Returns to unfiltered view using the fetch all articles if search field empty
-    if (inputValue.length === 0) {
-      return this.updateArticles();
+  // updates only when inputText is cleared
+  useEffect(() =>{
+    if (inputText.length === 0) {
+      setSearchText(inputText)
     }
-    // Queries articles by search term, and sets page to display those articles.
-    const searchedArticles = await ArticlesAPI.searchArticles(inputValue)
-    this.setState ({
-      articles:searchedArticles,
-    })
+  }, [inputText])
+  
+  const handleInput = (e) => {
+    console.log(e.target.value)
+    setInputText(e.target.value)
   }
-
-  render() {
-    return (
-      <div>
-        <InputGroup>
-          <Input onChange={(e) => this.handleSearch(e)} type="text" placeholder="Search" />
-        </InputGroup>
-        <ArticleList articles={this.state.articles} />
-      </div>
-    );
+  const handleSearch = async () => {
+    setSearchText(inputText)
   }
+  return (
+    <div>
+      <InputGroup>
+        <InputGroupAddon addonType='prepend'>
+          <Button onClick={() => handleSearch()}>
+            Submit Query
+          </Button>
+        </InputGroupAddon>
+        <Input type="text" placeholder="Search" onChange={(e) => handleInput(e)} />
+      </InputGroup>
+      <ArticleList articles={articles} />
+    </div>
+  );
 }
 
 export default HomePage;

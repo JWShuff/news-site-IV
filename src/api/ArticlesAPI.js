@@ -25,20 +25,19 @@ const fetchArticlesBySection = async (section) => {
   return await tryFetch(url)
 };
 
-const fetchArticles = async (filters = null) => {
-  const url = filters ? `${BASE_URL}?filter={"where":${filters}}`
-  : BASE_URL
-  return await tryFetch(url)
+const fetchArticles = async (filterTitle = null) => {
+  const filterUrl = filterTitle && filterTitle != "" ?
+    `?filter={"where":{"title":{ "ilike": "${filterTitle}"}}}` :
+    ""
+  const url = BASE_URL + filterUrl
+  const response = await fetch(url);
+  const data = await response.json();
+  return data;
 };
 
-const searchArticles = async (query) => {
-  const url = `${BASE_URL}?filter={"where":{"title":{"ilike":"${query}"}}}`;
-  return await tryFetch(url)
-}
 
 export default {
   fetchArticleByID,
   fetchArticles,
   fetchArticlesBySection,
-  searchArticles
 };
