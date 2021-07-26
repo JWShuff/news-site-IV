@@ -25,16 +25,20 @@ const fetchArticlesBySection = async (section) => {
   return await tryFetch(url)
 };
 
-const fetchArticles = async (filterTitle = null) => {
-  const filterUrl = filterTitle && filterTitle != "" ?
-    `?filter={"where":{"title":{ "ilike": "${filterTitle}"}}}` :
-    ""
-  const url = BASE_URL + filterUrl
-  const response = await fetch(url);
-  const data = await response.json();
-  return data;
+const fetchArticles = async (filterTitle=null) => {
+  if (filterTitle == null) {
+    return await tryFetch(BASE_URL)
+  }
+  return searchArticles(filterTitle);
 };
 
+// helper function to fetch articles with a title query:
+const searchArticles = async(query) => {
+  const filterUrl = query && query != '' ?
+  `${BASE_URL}?filter={"where":{"title":{"ilike":"${query}"}}}`
+  : `${BASE_URL}`
+  return await tryFetch(filterUrl)
+}
 
 export default {
   fetchArticleByID,
