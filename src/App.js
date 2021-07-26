@@ -6,21 +6,19 @@ import HomePage from './pages/HomePage.js';
 import ArticlePage from './pages/ArticlePage.js';
 import SectionPage from './pages/SectionPage';
 
-class App extends Component {
-  render() {
-    return (
-      <div>
-        <Router>
-        <AppNav handleNavClick={(clickedItem) => console.log(clickedItem)} />
-          <div>
-            <Route exact path="/" component={HomePage} />
-            <Route exact path="/articles/:articleID" component={ArticlePage} />
-            <Route exact path='/sections/:sectionID' component={SectionPage} />
-          </div>
-        </Router>
-      </div>
-    );
-  }
+const App = () => {
+  return (
+    <div>
+      <Router>
+      <AppNav handleNavClick={(clickedItem) => console.log(clickedItem)} />
+        <div>
+          <Route exact path="/" component={HomePage} />
+          <Route exact path="/articles/:articleID" component={ArticlePage} />
+          <Route exact path='/sections/:sectionID' component={SectionPage} />
+        </div>
+      </Router>
+    </div>
+  );
 }
 
 export default App;
