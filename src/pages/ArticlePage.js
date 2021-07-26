@@ -27,31 +27,3 @@ const ArticlePage = (props) => {
 
 export default ArticlePage;
 
-
-// Functional solution:
-// function ArticlePage(props) {
-//   const [ article, setArticle ] = React.useState(null);
-
-//   React.useEffect(() => {
-//     const fetchArticleAsync = async () => {
-//       try {
-//         const articleJson = await fetchArticleByID(props.match.params.articleID);
-//         setArticle(articleJson);
-//       } catch (e) {
-//         console.error('error fetching article: ', e);
-//       }
-//     };
-
-//     if (article === null) {
-//       fetchArticleAsync();
-//     }
-//   }, [article]);
-
-//   return (
-//     <div>
-//       {article ? <Article {...article} /> :
-//         <span>404: Article Not Found</span>
-//       }
-//     </div>
-//   );
-// }

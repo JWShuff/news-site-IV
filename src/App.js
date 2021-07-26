@@ -22,19 +22,3 @@ const App = () => {
 }
 
 export default App;
-
-
-// Functional solution:
-// function App() {
-//   return (
-//     <div>
-//       <AppNav handleNavClick={(clickedItem) => console.log(clickedItem)} />
-//       <Router>
-//         <div>
-//           <Route exact path="/" component={HomePage} />
-//           <Route exact path="/articles/:articleID" component={ArticlePage} />
-//         </div>
-//       </Router>
-//     </div>
-//   );
-// }

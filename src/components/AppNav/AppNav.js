@@ -25,17 +25,3 @@ const AppNav = () => {
 }
 
 export default AppNav;
-
-
-// Functional solution:
-// function AppNav({ handleNavClick }) {
-//   return (
-//     <Navbar color="light">
-//       {navItems.map((navItem) =>
-//         <a href="#" onClick={() => handleNavClick( navItem.value )} >
-//           { navItem.label } |
-//         </a>
-//       )}
-//     </Navbar>
-//   );
-// }
