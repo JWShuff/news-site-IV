@@ -9,7 +9,8 @@ const ArticleList = (props) => {
     <ListGroup>
       { articles.map((article, index) => (
         <ListGroupItem key={index}>
-          <ArticleTeaser { ...article } id={ article.id } />
+          <ArticleTeaser { ...article } />
+          {/* <ArticleTeaser { ...article } id={ article.id } /> */}
         </ListGroupItem>
       ))}
     </ListGroup>
@@ -17,17 +18,3 @@ const ArticleList = (props) => {
 }
 
 export default ArticleList;
-
-
-// Functional solution:
-// function ArticleList({ articles }) {
-//   return (
-//     <ListGroup>
-//       {articles.map((article, index) => (
-//         <ListGroupItem>
-//           <ArticleTeaser {...article} id={ index + 1 } />
-//         </ListGroupItem>
-//       ))}
-//     </ListGroup>
-//   );
-// }

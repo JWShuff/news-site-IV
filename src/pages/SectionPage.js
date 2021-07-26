@@ -9,6 +9,7 @@ const SectionPage = (props) => {
   // Helper Methods
   const updateSectionArticles = async () => {
     try {
+      
       const sectionID = props.match.params.sectionID
       const sectionArticles = await ArticlesAPI.fetchArticlesBySection(sectionID);
       setArticles(sectionArticles);
@@ -20,7 +21,7 @@ const SectionPage = (props) => {
   // Life cycles:
   useEffect(() => {
     updateSectionArticles();
-  }, [articles])
+  }, [articles, props.filterText])
 
   return (
     <div>
