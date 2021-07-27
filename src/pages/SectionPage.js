@@ -31,53 +31,46 @@ const SectionPage = (props) => {
     }
   }
 
-  // const filterSectionArticles = async () => {
-  //   try {
-  //     // Load articles that match the section
-  //     const sectionID = props.match.params.sectionID
-  //     const sectionArticles = await ArticlesAPI.fetchArticlesBySection(sectionID);
-  //     if(props.filterText == '') {
-  //       updateSectionArticles();
-  //     }
-  //     else {
-  //       const filterArticles = []
-  //       for (let i=0; i < sectionArticles.length; i++) {
-  //         if (sectionArticles[i].title.includes(props.filterText)) {
-  //           filterArticles.push(sectionArticles[i])
-  //         }
-  //         console.log(filterArticles)
-  //       }
-  //       setArticles(filterArticles)
-  //     }
-  //   } catch (e) {
-  //     console.error('error fetching section articles: ', e);
-  //   }
-  // }
+  const filterSectionArticles = async () => {
+    try {
+      // Load articles that match the section
+      const sectionID = props.match.params.sectionID
+      const sectionArticles = await ArticlesAPI.fetchArticlesBySection(sectionID);
+      if(props.filterText == '') {
+        updateSectionArticles();
+      }
+      else {
+        const filterArticles = []
+        for (let i=0; i < sectionArticles.length; i++) {
+          if (sectionArticles[i].title.includes(props.filterText)) {
+            filterArticles.push(sectionArticles[i])
+          }
+          console.log(filterArticles)
+        }
+        setArticles(filterArticles)
+      }
+    } catch (e) {
+      console.error('error fetching section articles: ', e);
+    }
+  }
 
   // Life cycles:
   useEffect(() => {
     updateSectionArticles();
-  }, [articles])
+  }, [])
 
   useEffect(() => {
     updateSectionArticles();
-  }, props.SectionID)
+  }, [props.match.params.sectionID])
 
   // Filters the section's articles by the text using a helper function.
-  // useEffect(() => {
-  //   console.log('filter changed to: ', props.filterText)
-  //   filterSectionArticles();
-  // }, [props.filterText])
+  useEffect(() => {
+    console.log('filter changed to: ', props.filterText)
+    filterSectionArticles();
+  }, [props.filterText])
 
   return (
     <div>
-      <h3>
-        {
-          props.match.params.sectionID ?
-        `${props.match.params.sectionID} page`
-        : 'NO SUCH SECTION.'
-      }
-      </h3>
       {articles ? <ArticleList articles={ articles }/> :
         <span>404: Articles Not Found</span>
       }

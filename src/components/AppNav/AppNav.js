@@ -9,15 +9,17 @@ const AppNav = (props) => {
   
   return (
     <Navbar color="light">
-      <NavbarBrand>
-        <Link to='/'>Home</Link>
-      </NavbarBrand>
+      <Nav >
+        <Link to='/'>| Home |</Link>
+      </Nav>
+      <Nav>
         {
           navItems.map((navItem, index) =>
             <Link to={`/sections/${navItem.label.toLowerCase()}`} key={index}>
               | { navItem.label } |
             </Link>
         )}
+      </Nav>
       <Nav>
         < SearchBar handleFilterText={props.handleFilterText}/>
       </Nav>

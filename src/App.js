@@ -30,7 +30,6 @@ const App = () => {
           handleNavClick={(clickedItem) => console.log(clickedItem)}
           handleFilterText={(newFilterText) => {
             setFilterText(newFilterText)
-            console.log(newFilterText)
           }} 
         />
         <div>
