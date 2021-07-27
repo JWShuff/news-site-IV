@@ -12,13 +12,13 @@ const App = () => {
 
   const renderHomePage = (routerProps) => {
     return (
-      <HomePage {...routerProps} filterText = {filterText} />
+      <HomePage {...routerProps} filterText={filterText} />
     )
   }
 
    const renderSectionPage = (routerProps) => {
     return (
-      <SectionPage {...routerProps} filterText = {filterText} />
+      <SectionPage {...routerProps} filterText={filterText} />
     )
   }
 
