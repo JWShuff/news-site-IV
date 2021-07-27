@@ -10,7 +10,6 @@ const ArticlePage = (props) => {
   useEffect(() => {
     const fetchDataAsync = async () => {
       try {
-        console.log('trying to load json')
         const json = await ArticlesAPI.fetchArticleByID(props.match.params.articleID)
         setArticle(json);
       } catch (error) {
@@ -21,7 +20,6 @@ const ArticlePage = (props) => {
       fetchDataAsync();
     }
   }, [article]);
-  console.log(article)
   return ( <Article {...article} /> );
 }
 

@@ -26,7 +26,7 @@ const fetchArticlesBySection = async (section) => {
 };
 
 const fetchArticles = async (filterTitle=null) => {
-  if (filterTitle == null) {
+  if (filterTitle == null || filterTitle == '') {
     return await tryFetch(BASE_URL)
   }
   return searchArticles(filterTitle);
